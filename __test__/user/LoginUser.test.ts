@@ -8,6 +8,7 @@ test("should create a user", async () => {
     password: "123",
   };
   const data = await create.execute(input);
+  console.log(data?.token);
   expect(data).not.toBeNull();
   expect(data?.id).not.toBeUndefined();
   expect(data?.email).toEqual("john@email.com");

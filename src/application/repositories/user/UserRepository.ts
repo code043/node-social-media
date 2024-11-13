@@ -5,4 +5,5 @@ export type UserInput = Omit<UserData, "email">;
 export interface UserRepository {
   createUser(input: UserInput): Promise<UserData | undefined>;
   login(input: UserInput): Promise<UserData | undefined>;
+  getUserById(id: number): Promise<UserData | undefined>;
 }
