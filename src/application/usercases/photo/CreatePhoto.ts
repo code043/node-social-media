@@ -14,7 +14,7 @@ type Input = {
   title: string;
   peso: string;
   idade: string;
-  src: string;
+  src?: string;
 };
 type Output = {
   author: string;
