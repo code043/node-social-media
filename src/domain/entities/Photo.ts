@@ -2,10 +2,10 @@ export default class Photo {
   constructor(
     readonly author: string,
     readonly title: string,
-    readonly peso: string,
-    readonly idade: string,
+    readonly peso: number,
+    readonly idade: number,
     readonly src?: string,
-    readonly date?: string,
+    readonly date?: number,
     readonly acessos?: string,
     readonly totalComments?: string,
     readonly id?: string

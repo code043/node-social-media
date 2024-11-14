@@ -12,15 +12,15 @@ export default class CreatePhoto {
 type Input = {
   author: string;
   title: string;
-  peso: string;
-  idade: string;
+  peso: number;
+  idade: number;
   src?: string;
 };
 type Output = {
   author: string;
   title: string;
-  peso: string;
-  idade: string;
+  peso: number;
+  idade: number;
   src?: string;
   id?: string;
 };
