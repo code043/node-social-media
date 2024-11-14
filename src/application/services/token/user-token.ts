@@ -1,26 +1,36 @@
 import jwt from "jsonwebtoken";
 import UserService from "../user/UserService";
 import UserInMemory from "../../../infra/repositories/in-memory/user/UserInMemory";
+import { UserData } from "../../repositories/user/UserRepository";
+type Output = {
+  ok: boolean;
+  id: number;
 
+  name: string;
+  email: string;
+  src?: string;
+};
 export class Token {
   generateToken(id?: number) {
     if (!id) {
       return "-1";
     } else {
-      return jwt.sign({ user: id }, "secret", {
+      return jwt.sign({ id: id }, "secret", {
         expiresIn: "1d",
       });
     }
   }
-  async validate(token: string): Promise<boolean | null> {
-    const user = new UserService(UserInMemory);
+  async validate(token: string): Promise<number | null> {
+    const userInDatabase = new UserService(UserInMemory);
     if (!token) {
       return null;
     } else {
       const data = jwt.verify(token, "secret") as string;
       if (data) {
-        const id = JSON.parse(atob(token.split(".")[1]));
-        return id.user === (await user.findUser(id.user)) ? true : null;
+        const { id } = JSON.parse(atob(token.split(".")[1]));
+
+        const idDatabase = await userInDatabase.findUser(id);
+        return id === idDatabase ? idDatabase : null;
       } else {
         return null;
       }
