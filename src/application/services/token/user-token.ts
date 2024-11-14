@@ -1,15 +1,7 @@
 import jwt from "jsonwebtoken";
 import UserService from "../user/UserService";
 import UserInMemory from "../../../infra/repositories/in-memory/user/UserInMemory";
-import { UserData } from "../../repositories/user/UserRepository";
-type Output = {
-  ok: boolean;
-  id: number;
 
-  name: string;
-  email: string;
-  src?: string;
-};
 export class Token {
   generateToken(id?: number) {
     if (!id) {
