@@ -5,6 +5,7 @@ import { storage } from "./infra/multer/config";
 import CreateUser from "./application/usercases/user/CreateUser";
 import UserInMemory from "./infra/repositories/in-memory/user/UserInMemory";
 import LoginUser from "./application/usercases/user/LoginUser";
+import { Token } from "./application/services/token/user-token";
 
 const app = express();
 app.use(cors());
@@ -37,6 +38,15 @@ app.post("/register", async (req, res) => {
   res.status(201).json({
     message: "Registered",
     id: data
+  })
+})
+app.post("/token", async (req, res) => {
+  const validateToken = new Token()
+  const auth = req.headers['authorization']
+  const token = auth?.split(' ')[1] as string
+  const ok = validateToken.validate(token)
+  res.status(200).json({
+    message: "Valid token"
   })
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
