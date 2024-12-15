@@ -6,6 +6,7 @@ import CreateUser from "./application/usercases/user/CreateUser";
 import UserInMemory from "./infra/repositories/in-memory/user/UserInMemory";
 import LoginUser from "./application/usercases/user/LoginUser";
 import { Token } from "./application/services/token/user-token";
+import GetUser from "./application/usercases/user/GetUser";
 
 const app = express();
 app.use(cors());
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const upload = multer({ storage });
-app.post("/login", async (req, res) => {
+app.post("/jwt-auth/v1/token", async (req, res) => {
   const { name, password } = req. body
   const create = new LoginUser(UserInMemory);
   const bodyData = {
@@ -26,7 +27,7 @@ app.post("/login", async (req, res) => {
     token: data?.token
   })
 })
-app.post("/register", async (req, res) => {
+app.post("/user/register", async (req, res) => {
   const { name, email, password } = req.body
   const bodyData = {
     name,
@@ -40,13 +41,24 @@ app.post("/register", async (req, res) => {
     id: data
   })
 })
-app.post("/token", async (req, res) => {
+app.post("/jwt-auth/v1/token/validate", async (req, res) => {
   const validateToken = new Token()
   const auth = req.headers['authorization']
   const token = auth?.split(' ')[1] as string
   const ok = validateToken.validate(token)
   res.status(200).json({
     message: "Valid token"
+  })
+})
+app.post("/user", async (req, res) => {
+  const getUser = new GetUser(UserInMemory);
+  const validateToken = new Token()
+  const auth = req.headers['authorization']
+  const token = auth?.split(' ')[1] as string
+  const user = await getUser.execute(token);
+  res.status(200).json({
+    message: "",
+    data: user
   })
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
