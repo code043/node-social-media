@@ -7,6 +7,9 @@ import UserInMemory from "./infra/repositories/in-memory/user/UserInMemory";
 import LoginUser from "./application/usercases/user/LoginUser";
 import { Token } from "./application/services/token/user-token";
 import GetUser from "./application/usercases/user/GetUser";
+import CreatePhoto from "./application/usercases/photo/CreatePhoto";
+import PhotoInMemory from "./infra/repositories/in-memory/photo/PhotoInMemory";
+import { checkToken } from "./infra/middleware/photo";
 
 const app = express();
 app.use(cors());
@@ -45,9 +48,10 @@ app.post("/jwt-auth/v1/token/validate", async (req, res) => {
   const validateToken = new Token()
   const auth = req.headers['authorization']
   const token = auth?.split(' ')[1] as string
-  const ok = validateToken.validate(token)
+  const id = validateToken.validate(token)
   res.status(200).json({
-    message: "Valid token"
+    message: "Valid token",
+    data: id
   })
 })
 app.post("/user", async (req, res) => {
@@ -55,15 +59,20 @@ app.post("/user", async (req, res) => {
   const validateToken = new Token()
   const auth = req.headers['authorization']
   const token = auth?.split(' ')[1] as string
+  const id = validateToken.validate(token)
   const user = await getUser.execute(token);
   res.status(200).json({
     message: "",
     data: user
   })
 })
-app.post("/photo", upload.single("image"), async (req, res) => {
+app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
+  const create = new CreatePhoto(PhotoInMemory);
+  const post = await create.execute(req.body);
+  
   res.status(200).json({
-    message: "ok",
+    message: "Post",
+    data: post
   });
 });
 
