@@ -2,6 +2,7 @@ import PhotoRepository from "../../../../application/repositories/photo/PhotoRep
 import Photo from "../../../../domain/entities/Photo";
 
 class PhotoInMemory implements PhotoRepository {
+  
   private photos: Photo[] = [];
 
   async createPhoto(input: Photo): Promise<Photo | undefined> {
@@ -13,6 +14,9 @@ class PhotoInMemory implements PhotoRepository {
     const photo = this.photos.find((photo) => photo.id === newPhoto.id);
     if (!photo) return;
     return photo;
+  }
+  async listAllPosts(): Promise<Photo[] | undefined> {
+    return await this.photos 
   }
 }
 export default new PhotoInMemory();

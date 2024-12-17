@@ -66,11 +66,18 @@ app.post("/user", async (req, res) => {
     data: user
   })
 })
+
+app.get("/photo/", async (req, res) => {
+  res.status(200).json({
+    message: "all posts",
+    data: null
+  })
+})
 app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
   const create = new CreatePhoto(PhotoInMemory);
   const post = await create.execute(req.body);
   
-  res.status(200).json({
+  res.status(201).json({
     message: "Post",
     data: post
   });
