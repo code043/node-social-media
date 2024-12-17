@@ -10,6 +10,7 @@ import GetUser from "./application/usercases/user/GetUser";
 import CreatePhoto from "./application/usercases/photo/CreatePhoto";
 import PhotoInMemory from "./infra/repositories/in-memory/photo/PhotoInMemory";
 import { checkToken } from "./infra/middleware/photo";
+import GetAllPosts from "./application/usercases/photo/GetAllPosts";
 
 const app = express();
 app.use(cors());
@@ -68,9 +69,11 @@ app.post("/user", async (req, res) => {
 })
 
 app.get("/photo/", async (req, res) => {
+  const getAll = new GetAllPosts(PhotoInMemory)
+  const posts = getAll.execute()
   res.status(200).json({
     message: "all posts",
-    data: null
+    data: posts
   })
 })
 app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
