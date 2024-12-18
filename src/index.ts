@@ -106,6 +106,9 @@ app.post("/password/lost", checkToken, (req, res) => {
 app.post("/password/reset", (req, res) => {
   res.end("Reset")
 })
+app.post("/stats", checkToken, (req, res) => {
+  res.end("Stats")
+})
 app.listen(3000, () => {
   console.log("Running..");
 });
