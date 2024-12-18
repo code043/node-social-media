@@ -76,15 +76,12 @@ app.get("/photo/", async (req, res) => {
     data: posts
   })
 })
-app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
-  const create = new CreatePhoto(PhotoInMemory);
-  const post = await create.execute(req.body);
-  
-  res.status(201).json({
+app.get("photo/:id", async(req, res) => {
+  res.status(200).json({
     message: "Post",
-    data: post
-  });
-});
+    data: null
+  })
+})
 
 app.listen(3000, () => {
   console.log("Running..");
