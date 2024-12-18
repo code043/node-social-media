@@ -88,7 +88,18 @@ app.get("/photo/", async (req, res) => {
   console.log(req.query)
   res.end("query")
 })
-
+app.delete("/photo/:id", checkToken, async (req, res) => {
+  res.end("delete")
+})
+app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
+  const create = new CreatePhoto(PhotoInMemory);
+  const post = await create.execute(req.body);
+  
+  res.status(201).json({
+    message: "Post",
+    data: post
+  });
+});
 app.listen(3000, () => {
   console.log("Running..");
 });
