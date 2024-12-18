@@ -82,6 +82,12 @@ app.get("photo/:id", async(req, res) => {
     data: null
   })
 })
+//photo/?_page=1&_total=10&_user=1
+app.get("/photo/", async (req, res) => {
+
+  console.log(req.query)
+  res.end("query")
+})
 
 app.listen(3000, () => {
   console.log("Running..");
