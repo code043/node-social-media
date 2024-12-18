@@ -100,6 +100,9 @@ app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
     data: post
   });
 });
+app.post("/password/lost", checkToken, (req, res) => {
+  res.end("Pass lost")
+})
 app.listen(3000, () => {
   console.log("Running..");
 });
