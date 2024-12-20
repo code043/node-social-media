@@ -2,8 +2,10 @@ import PhotoRepository from "../../repositories/photo/PhotoRepository";
 
 export default class GetPost {
   constructor(private repository: PhotoRepository) {}
-  async execute(id: number): Promise<Output | null> {
-    return null
+  async execute(id: string): Promise<Output | null> {
+    const post = await this.repository.getPost(id)
+    if(!post) return null
+    return post
   }
 }
 

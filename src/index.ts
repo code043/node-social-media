@@ -11,6 +11,7 @@ import CreatePhoto from "./application/usercases/photo/CreatePhoto";
 import PhotoInMemory from "./infra/repositories/in-memory/photo/PhotoInMemory";
 import { checkToken } from "./infra/middleware/photo";
 import GetAllPosts from "./application/usercases/photo/GetAllPosts";
+import GetPost from "./application/usercases/photo/GetPost";
 
 const app = express();
 app.use(cors());
@@ -77,11 +78,15 @@ app.get("/photo/", async (req, res) => {
     data: posts
   })
 })
-app.get("photo/:id", async(req, res) => {
+app.get("/photo/:id", async(req, res) => {
+  console.log(req.params.id)
+  const { id } = req.params
+  const getPost = new GetPost(PhotoInMemory)
+  const post = await getPost.execute(id)
   res.status(200).json({
-    message: "Post",
-    data: null
-  })
+    message: "Post " + id,
+    data: post
+  });
 })
 //photo/?_page=1&_total=10&_user=1
 app.get("/photo/", async (req, res) => {
@@ -90,7 +95,7 @@ app.get("/photo/", async (req, res) => {
   res.end("query")
 })
 app.delete("/photo/:id", checkToken, async (req, res) => {
-  res.end("delete")
+ res.end('delete')
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
   const bodyDate = {
