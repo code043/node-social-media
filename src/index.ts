@@ -70,7 +70,8 @@ app.post("/user", async (req, res) => {
 
 app.get("/photo/", async (req, res) => {
   const getAll = new GetAllPosts(PhotoInMemory)
-  const posts = getAll.execute()
+  const posts = await getAll.execute()
+  
   res.status(200).json({
     message: "all posts",
     data: posts
@@ -91,7 +92,7 @@ app.get("/photo/", async (req, res) => {
 app.delete("/photo/:id", checkToken, async (req, res) => {
   res.end("delete")
 })
-app.post("/photo", checkToken, upload.single("image"), async (req, res) => {
+app.post("/photo", upload.single("image"), async (req, res) => {
   const create = new CreatePhoto(PhotoInMemory);
   const post = await create.execute(req.body);
   
