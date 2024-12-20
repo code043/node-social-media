@@ -93,9 +93,13 @@ app.delete("/photo/:id", checkToken, async (req, res) => {
   res.end("delete")
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
+  const bodyDate = {
+    ...req.body,
+    src: req.file?.filename
+  }
   const create = new CreatePhoto(PhotoInMemory);
-  const post = await create.execute(req.body);
-  
+  const post = await create.execute(bodyDate);
+ 
   res.status(201).json({
     message: "Post",
     data: post
