@@ -13,6 +13,6 @@
   "ts-node": {
     "esm": true
 },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*", "images/", "build.js"],
   "exclude": ["node_modules", "__test__"]
 }

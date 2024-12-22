@@ -6,7 +6,14 @@ class PhotoInMemory implements PhotoRepository {
   private photos: Photo[] = [];
 
   constructor(){
-    this.photos = []
+    this.photos = [{
+      "id": "252ae843-22d3-4f85-af4d-fc9133d9ae9d",
+		"author": "Me",
+		"title": "New Post",
+		"peso": 10,
+		"idade": 8,
+		"src": "649deae644f191824b654a9a501af7b473c81ef5d46d6a17900238aa5cb7da06cd312bd71dbcddfe95c08ea5a366bd752116685811c56cb8ffefae88b7d4d81e.png"
+    }]
   }
   
 

@@ -1,3 +1,4 @@
+import path from "path"
 import express from "express";
 import multer from "multer";
 import cors from "cors";
@@ -7,17 +8,18 @@ import UserInMemory from "./infra/repositories/in-memory/user/UserInMemory";
 import LoginUser from "./application/usercases/user/LoginUser";
 import { Token } from "./application/services/token/user-token";
 import GetUser from "./application/usercases/user/GetUser";
-import CreatePhoto from "./application/usercases/photo/CreatePhoto";
 import PhotoInMemory from "./infra/repositories/in-memory/photo/PhotoInMemory";
 import { checkToken } from "./infra/middleware/photo";
 import GetAllPosts from "./application/usercases/photo/GetAllPosts";
 import GetPost from "./application/usercases/photo/GetPost";
+import { PhotoService } from "./application/services/photo/PhotoService";
+import CreatePhoto from "./application/usercases/photo/CreatePhoto";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/images',express.static(path.join(process.cwd(), 'src', 'infra', 'images')))
 const upload = multer({ storage });
 app.post("/jwt-auth/v1/token", async (req, res) => {
   const { name, password } = req. body
@@ -119,6 +121,8 @@ app.post("/password/reset", (req, res) => {
 app.post("/stats", checkToken, (req, res) => {
   res.end("Stats")
 })
+const p = new PhotoService()
+console.log(p.photoPath("skskdj.jpg"))
 app.listen(3000, () => {
   console.log("Running..");
 });
