@@ -1,11 +1,19 @@
 import multer from "multer";
-import { fileURLToPath } from 'url'
-import path, { dirname } from "path"
+import path from "path"
+import fs from "fs"
 import crypto from 'crypto'
 
+const build = path.join(process.cwd(), '/dist', '/src', '/infra', '/images/');
+
+if (process.env.NODE_ENV === 'production' && !fs.existsSync(build)) {
+  fs.mkdir(build, { recursive: true }, (err) => {
+      if(err) console.log(err)
+  });
+}
+           
 export const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(dirname(fileURLToPath(import.meta.url)),"../images"));
+    cb(null, path.join(process.cwd(),'/src', '/infra', '/images'));
   },
   filename: function (req, file, cb) {
     const extensaoArquivo = file.originalname.split(".")[1];

@@ -100,10 +100,10 @@ app.delete("/photo/:id", checkToken, async (req, res) => {
  res.end('delete')
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
-  const path = new PhotoService()
+  const p = new PhotoService()
   const bodyDate = {
     ...req.body,
-    src: path.photoPath(req.file?.filename) 
+    src: p.photoPath(req.file?.filename) 
   }
   const create = new CreatePhoto(PhotoInMemory);
   const post = await create.execute(bodyDate);

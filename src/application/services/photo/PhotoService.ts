@@ -1,8 +1,7 @@
-import { fileURLToPath } from 'url'
-import path, { dirname } from "path"
+import path from "path"
 
 export class PhotoService{
-  private pathsystem: string = dirname(fileURLToPath(import.meta.url))
+  private pathsystem: string = process.cwd()
   private pathlocalhost: string = "http://localhost:3000"
   photoPath(p: string  | undefined){   
     if(typeof p != 'string') throw Error("Must be string")
