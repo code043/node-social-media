@@ -100,9 +100,10 @@ app.delete("/photo/:id", checkToken, async (req, res) => {
  res.end('delete')
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
+  const path = new PhotoService()
   const bodyDate = {
     ...req.body,
-    src: req.file?.filename
+    src: path.photoPath(req.file?.filename) 
   }
   const create = new CreatePhoto(PhotoInMemory);
   const post = await create.execute(bodyDate);
@@ -121,8 +122,7 @@ app.post("/password/reset", (req, res) => {
 app.post("/stats", checkToken, (req, res) => {
   res.end("Stats")
 })
-const p = new PhotoService()
-console.log(p.photoPath("skskdj.jpg"))
+
 app.listen(3000, () => {
   console.log("Running..");
 });
