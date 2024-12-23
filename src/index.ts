@@ -81,7 +81,6 @@ app.get("/photo/", async (req, res) => {
   })
 })
 app.get("/photo/:id", async(req, res) => {
-  console.log(req.params.id)
   const { id } = req.params
   const getPost = new GetPost(PhotoInMemory)
   const post = await getPost.execute(id)

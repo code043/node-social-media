@@ -3,10 +3,10 @@ import Photo from "../../../../domain/entities/Photo";
 
 class PhotoInMemory implements PhotoRepository {
   
-  private photos: Photo[] = [];
+  private posts: Photo[] = [];
 
   constructor(){
-    this.photos = [{
+    this.posts = [{
       "id": "252ae843-22d3-4f85-af4d-fc9133d9ae9d",
 		"author": "Me",
 		"title": "New Post",
@@ -22,18 +22,18 @@ class PhotoInMemory implements PhotoRepository {
       id: crypto.randomUUID(),
       ...input,
     };
-    this.photos.push(newPhoto);
-    const photo = this.photos.find((photo) => photo.id === newPhoto.id);
+    this.posts.push(newPhoto);
+    const photo = this.posts.find((photo) => photo.id === newPhoto.id);
     if (!photo) return;
    
 
     return photo;
   }
   async listAllPosts(): Promise<Photo[] | undefined> {
-    return await this.photos 
+    return await this.posts 
   }
   async getPost(id: string): Promise<Photo | undefined> {
-    const post = this.photos.find((photo) => photo.id === id)
+    const post = this.posts.find((photo) => photo.id === id)
     if(!post){
       return
     }
