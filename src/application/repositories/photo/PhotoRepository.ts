@@ -1,4 +1,4 @@
-import Photo from "../../../domain/entities/Photo";
+import Photo from "../../../domain/entities/Post";
 
 export default interface PhotoRepository {
   createPhoto(input: Photo): Promise<Photo | undefined>;

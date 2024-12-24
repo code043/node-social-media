@@ -1,4 +1,4 @@
-export default class Photo {
+export default class Post {
   constructor(
     readonly author: string,
     readonly title: string,

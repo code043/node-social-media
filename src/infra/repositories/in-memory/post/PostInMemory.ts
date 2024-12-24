@@ -1,5 +1,5 @@
 import PhotoRepository from "../../../../application/repositories/photo/PhotoRepository";
-import Photo from "../../../../domain/entities/Photo";
+import Photo from "../../../../domain/entities/Post";
 
 class PhotoInMemory implements PhotoRepository {
   

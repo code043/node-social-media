@@ -1,6 +1,6 @@
 import PhotoRepository from "../../repositories/photo/PhotoRepository";
 
-export default class CreatePhoto {
+export default class CreatePost {
   constructor(private repository: PhotoRepository) {}
   async execute(input: Input): Promise<Output | null> {
     const photo = await this.repository.createPhoto(input);
