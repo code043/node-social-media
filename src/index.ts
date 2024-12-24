@@ -10,10 +10,10 @@ import { Token } from "./application/services/token/user-token";
 import GetUser from "./application/usercases/user/GetUser";
 import PostInMemory from "./infra/repositories/in-memory/post/PostInMemory";
 import { checkToken } from "./infra/middleware/photo";
-import GetAllPosts from "./application/usercases/photo/GetAllPosts";
-import GetPost from "./application/usercases/photo/GetPost";
+import GetAllPosts from "./application/usercases/post/GetAllPosts";
+import GetPost from "./application/usercases/post/GetPost";
 import { PhotoService } from "./application/services/photo/PhotoService";
-import CreatePhoto from "./application/usercases/photo/CreatePhoto";
+import CreatePhoto from "./application/usercases/post/CreatePost";
 
 const app = express();
 app.use(cors());

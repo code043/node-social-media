@@ -1,9 +1,9 @@
-import PhotoRepository from "../../repositories/photo/PhotoRepository";
+import PostRepository from "../../repositories/post/PostRepository";
 
 export default class CreatePost {
-  constructor(private repository: PhotoRepository) {}
+  constructor(private repository: PostRepository) {}
   async execute(input: Input): Promise<Output | null> {
-    const photo = await this.repository.createPhoto(input);
+    const photo = await this.repository.createPost(input)
     if (!photo) return null;
     return photo;
   }
