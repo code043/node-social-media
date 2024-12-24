@@ -1,9 +1,9 @@
-import PhotoRepository from "../../../../application/repositories/post/PostRepository";
-import Photo from "../../../../domain/entities/Post";
+import PostRepository from "../../../../application/repositories/post/PostRepository";
+import Post from "../../../../domain/entities/Post";
 
-class PhotoInMemory implements PhotoRepository {
+class PostInMemory implements PostRepository {
   
-  private posts: Photo[] = [];
+  private posts: Post[] = [];
 
   constructor(){
     this.posts = [{
@@ -17,29 +17,29 @@ class PhotoInMemory implements PhotoRepository {
   }
   
 
-  async createPhoto(input: Photo): Promise<Photo | undefined> {
-    const newPhoto = {
+  async createPost(input: Post): Promise<Post | undefined> {
+    const newPost = {
       id: crypto.randomUUID(),
       ...input,
     };
-    this.posts.push(newPhoto);
-    const photo = this.posts.find((photo) => photo.id === newPhoto.id);
-    if (!photo) return;
+    this.posts.push(newPost);
+    const post = this.posts.find((Post) => Post.id === newPost.id);
+    if (!post) return;
    
 
-    return photo;
+    return post;
   }
-  async listAllPosts(): Promise<Photo[] | undefined> {
+  async listAllPosts(): Promise<Post[] | undefined> {
     return await this.posts 
   }
-  async getPost(id: string): Promise<Photo | undefined> {
-    const post = this.posts.find((photo) => photo.id === id)
+  async getPost(id: string): Promise<Post | undefined> {
+    const post = this.posts.find((post) => post.id === id)
     if(!post){
       return
     }
     return post
   }
-  updatePost(id: string, data: Photo): Promise<Photo | undefined> {
+  updatePost(id: string, data: Post): Promise<Post | undefined> {
     throw new Error("Method not implemented.");
   }
   deletePost(id: string): Promise<void> {
@@ -47,4 +47,4 @@ class PhotoInMemory implements PhotoRepository {
   }
   
 }
-export default new PhotoInMemory();
+export default new PostInMemory();
