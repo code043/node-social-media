@@ -8,7 +8,7 @@ import UserInMemory from "./infra/repositories/in-memory/user/UserInMemory";
 import LoginUser from "./application/usercases/user/LoginUser";
 import { Token } from "./application/services/token/user-token";
 import GetUser from "./application/usercases/user/GetUser";
-import PhotoInMemory from "./infra/repositories/in-memory/photo/PhotoInMemory";
+import PostInMemory from "./infra/repositories/in-memory/post/PostInMemory";
 import { checkToken } from "./infra/middleware/photo";
 import GetAllPosts from "./application/usercases/photo/GetAllPosts";
 import GetPost from "./application/usercases/photo/GetPost";
@@ -72,7 +72,7 @@ app.post("/user", async (req, res) => {
 })
 
 app.get("/photo/", async (req, res) => {
-  const getAll = new GetAllPosts(PhotoInMemory)
+  const getAll = new GetAllPosts(PostInMemory)
   const posts = await getAll.execute()
   
   res.status(200).json({
@@ -82,7 +82,7 @@ app.get("/photo/", async (req, res) => {
 })
 app.get("/photo/:id", async(req, res) => {
   const { id } = req.params
-  const getPost = new GetPost(PhotoInMemory)
+  const getPost = new GetPost(PostInMemory)
   const post = await getPost.execute(id)
   res.status(200).json({
     message: "Post " + id,
@@ -104,7 +104,7 @@ app.post("/photo", upload.single("image"), async (req, res) => {
     ...req.body,
     src: p.photoPath(req.file?.filename) 
   }
-  const create = new CreatePhoto(PhotoInMemory);
+  const create = new CreatePhoto(PostInMemory);
   const post = await create.execute(bodyDate);
  
   res.status(201).json({
