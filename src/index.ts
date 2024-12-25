@@ -12,7 +12,7 @@ import PostInMemory from "./infra/repositories/in-memory/post/PostInMemory";
 import { checkToken } from "./infra/middleware/photo";
 import GetAllPosts from "./application/usercases/post/GetAllPosts";
 import GetPost from "./application/usercases/post/GetPost";
-import { PhotoService } from "./application/services/photo/PhotoService";
+import { PostService } from "./application/services/post/PostService";
 import CreatePhoto from "./application/usercases/post/CreatePost";
 
 const app = express();
@@ -99,7 +99,7 @@ app.delete("/photo/:id", checkToken, async (req, res) => {
  res.end('delete')
 })
 app.post("/photo", upload.single("image"), async (req, res) => {
-  const p = new PhotoService()
+  const p = new PostService()
   const bodyDate = {
     ...req.body,
     src: p.photoPath(req.file?.filename) 
