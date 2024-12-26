@@ -9,11 +9,11 @@ import LoginUser from "./application/usercases/user/LoginUser";
 import { Token } from "./application/services/token/user-token";
 import GetUser from "./application/usercases/user/GetUser";
 import PostInMemory from "./infra/repositories/in-memory/post/PostInMemory";
-import { checkToken } from "./infra/middleware/photo";
+import { checkToken } from "./infra/middleware/post";
 import GetAllPosts from "./application/usercases/post/GetAllPosts";
 import GetPost from "./application/usercases/post/GetPost";
 import { PostService } from "./application/services/post/PostService";
-import CreatePhoto from "./application/usercases/post/CreatePost";
+import CreatePost from "./application/usercases/post/CreatePost";
 
 const app = express();
 app.use(cors());
@@ -104,7 +104,7 @@ app.post("/photo", upload.single("image"), async (req, res) => {
     ...req.body,
     src: p.photoPath(req.file?.filename) 
   }
-  const create = new CreatePhoto(PostInMemory);
+  const create = new CreatePost(PostInMemory);
   const post = await create.execute(bodyDate);
  
   res.status(201).json({
