@@ -43,6 +43,7 @@ class PostInMemory implements PostRepository {
     throw new Error("Method not implemented.");
   }
   deletePost(id: string): Promise<void> {
+    this.posts.filter((post) => post.id != id)
     throw new Error("Method not implemented.");
   }
   
